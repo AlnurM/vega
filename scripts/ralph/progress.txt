@@ -148,3 +148,22 @@ Build a single page "AI Explore" that:
   - Use Array.isArray check to distinguish objects from arrays
   - Keep validation simple - don't need full schema validation for MVP
 ---
+
+## 2025-01-16 - US-008
+- Create VegaChartPreview component using vega-embed
+- Created src/components/VegaChartPreview.tsx
+- Component receives Vega spec as prop (null when no spec)
+- Renders chart using vega-embed.default()
+- Uses hardcoded data: [{region:'Almaty',revenue:120}, {region:'Astana',revenue:90}, {region:'Shymkent',revenue:70}]
+- Shows "No chart spec available" when spec is null
+- Shows error message when render fails (catches vega-embed errors)
+- Cleans up previous chart on re-render
+- Typecheck passes successfully
+- **Learnings:**
+  - Use vega-embed.default() to render charts
+  - Add data to spec: { ...spec, data: { values: [...] } }
+  - Use type assertion (as VisualizationSpec) for TypeScript compatibility
+  - Clear container innerHTML before rendering new chart
+  - Use useEffect cleanup to clear chart on unmount
+  - Catch vega-embed errors and display user-friendly error message
+---

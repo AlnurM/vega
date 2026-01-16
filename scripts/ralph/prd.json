@@ -109,7 +109,7 @@
         "typecheck passes"
       ],
       "priority": 8,
-      "passes": false,
+      "passes": true,
       "notes": "Use vega-embed or react-vega, handle invalid specs gracefully"
     },
     {
