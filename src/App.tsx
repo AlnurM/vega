@@ -1,10 +1,7 @@
+import { AIExplore } from './pages/AIExplore'
+
 function App() {
-  return (
-    <div className="app">
-      <h1>AI Explore</h1>
-      <p>Project setup complete</p>
-    </div>
-  )
+  return <AIExplore />
 }
 
 export default App

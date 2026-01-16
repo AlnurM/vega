@@ -206,3 +206,25 @@ Build a single page "AI Explore" that:
   - Status indicator shows current state clearly
   - Buttons only enabled when action is valid
 ---
+
+## 2025-01-16 - US-011
+- Create AI Explore page component combining all parts
+- Created src/pages/AIExplore.tsx
+- Integrated FileUpload, StreamControls, StreamingOutput, VegaChartPreview
+- Load dump button loads .jsonl file (via FileUpload)
+- Play starts SSE emulation with 100ms delay
+- Streaming output updates in real-time (accumulates token.delta)
+- Vega chart updates as spec is extracted and validated
+- Status updates correctly: idle -> streaming -> done/error
+- Stop button cancels streaming (calls cleanup function)
+- State management: events, streamingText, vegaSpec, status
+- Updated App.tsx to render AIExplore page
+- Typecheck passes successfully
+- **Learnings:**
+  - Accumulate text from token.delta events in state
+  - Extract and validate Vega spec on each text update
+  - Use useRef to store cleanup function for cancellation
+  - Handle all event types: token, done, error
+  - Reset state when new file is loaded
+  - Integrate all utilities: parseJsonlFile, emulateSSE, extractVegaSpec, validateVegaSpec
+---
