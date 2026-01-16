@@ -39,7 +39,7 @@
         "typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "File input should use HTML5 FileReader API"
     },
     {

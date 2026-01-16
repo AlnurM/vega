@@ -60,3 +60,20 @@ Build a single page "AI Explore" that:
   - DoneEvent data can have flexible structure (usage is optional, allow additional fields)
   - Export types from dedicated types/ directory for better organization
 ---
+
+## 2025-01-16 - US-003
+- Create utility to read and parse .jsonl file
+- Created src/utils/jsonlParser.ts with parseJsonlFile function
+- Uses HTML5 FileReader API to read file content
+- Parses each line as JSON (StreamEvent)
+- Handles empty lines gracefully (skips them)
+- Handles invalid JSON lines gracefully (logs warning, continues)
+- Returns Promise<StreamEvent[]>
+- Typecheck passes successfully
+- **Learnings:**
+  - FileReader API is async, use Promise wrapper for better error handling
+  - Split text by '\n' to get lines, trim before processing
+  - Always handle empty lines in .jsonl files (common format issue)
+  - Don't crash on invalid JSON lines, log warning and continue
+  - Use try-catch around JSON.parse for each line
+---
