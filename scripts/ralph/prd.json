@@ -137,7 +137,7 @@
         "typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
+      "passes": true,
       "notes": "Status should update based on streaming state"
     },
     {

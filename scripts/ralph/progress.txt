@@ -188,3 +188,21 @@ Build a single page "AI Explore" that:
   - Emit events to parent via callback props
   - Clear selected file name on error
 ---
+
+## 2025-01-16 - US-010
+- Create Play/Stop controls and status indicator
+- Created src/components/StreamControls.tsx
+- Play button starts streaming (calls onPlay callback)
+- Stop button cancels streaming (calls onStop callback)
+- Status shows: idle | streaming | done | error
+- Play button disabled when streaming (enabled for idle/done/error)
+- Stop button disabled when not streaming (enabled only when streaming)
+- Status displayed with textTransform: capitalize
+- Typecheck passes successfully
+- **Learnings:**
+  - Export StreamStatus type for reuse in parent component
+  - Use disabled prop based on status state
+  - Visual feedback with opacity for disabled buttons
+  - Status indicator shows current state clearly
+  - Buttons only enabled when action is valid
+---
