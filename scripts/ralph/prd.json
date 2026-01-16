@@ -25,7 +25,7 @@
         "typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Types should match llm_stream_dump.jsonl structure"
     },
     {

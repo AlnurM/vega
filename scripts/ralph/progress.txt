@@ -46,3 +46,17 @@ Build a single page "AI Explore" that:
   - React 18+ with new JSX transform doesn't require React import in components
   - TypeScript strict mode helps catch unused imports early
 ---
+
+## 2025-01-16 - US-002
+- Define TypeScript types for SSE stream events
+- Created src/types/stream.ts with StreamEvent union type
+- TokenEvent: {event: 'token', data: {delta: string}}
+- DoneEvent: {event: 'done', data: {usage?: {...}, [key: string]: unknown}}
+- ErrorEvent: {event: 'error', data: {message: string}}
+- Types match llm_stream_dump.jsonl structure
+- Typecheck passes successfully
+- **Learnings:**
+  - Use discriminated unions for event types (event field as discriminator)
+  - DoneEvent data can have flexible structure (usage is optional, allow additional fields)
+  - Export types from dedicated types/ directory for better organization
+---
