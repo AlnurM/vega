@@ -13,13 +13,21 @@ export function AIExplore() {
   const [streamingText, setStreamingText] = useState('')
   const [vegaSpec, setVegaSpec] = useState<Record<string, unknown> | null>(null)
   const [status, setStatus] = useState<StreamStatus>('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const cleanupRef = useRef<(() => void) | null>(null)
 
   const handleFileLoaded = (loadedEvents: StreamEvent[]) => {
-    setEvents(loadedEvents)
-    setStreamingText('')
-    setVegaSpec(null)
-    setStatus('idle')
+    try {
+      setEvents(loadedEvents)
+      setStreamingText('')
+      setVegaSpec(null)
+      setStatus('idle')
+      setErrorMessage(null)
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : 'Failed to load file'
+      setErrorMessage(errorMsg)
+      setStatus('error')
+    }
   }
 
   const handlePlay = () => {
@@ -35,21 +43,36 @@ export function AIExplore() {
     let accumulatedText = ''
 
     const { promise, cleanup } = emulateSSE(events, 100, (event) => {
-      if (event.event === 'token') {
-        accumulatedText += event.data.delta
-        setStreamingText(accumulatedText)
+      try {
+        if (event.event === 'token') {
+          accumulatedText += event.data.delta
+          setStreamingText(accumulatedText)
 
-        // Try to extract and validate Vega spec
-        const extractedSpec = extractVegaSpec(accumulatedText)
-        if (extractedSpec) {
-          const validation = validateVegaSpec(extractedSpec)
-          if (validation.isValid) {
-            setVegaSpec(extractedSpec)
+          // Try to extract and validate Vega spec (errors are handled gracefully)
+          try {
+            const extractedSpec = extractVegaSpec(accumulatedText)
+            if (extractedSpec) {
+              const validation = validateVegaSpec(extractedSpec)
+              if (validation.isValid) {
+                setVegaSpec(extractedSpec)
+              }
+            }
+          } catch (specError) {
+            // Spec extraction/validation errors don't crash the app
+            console.warn('Vega spec extraction error:', specError)
           }
+        } else if (event.event === 'done') {
+          setStatus('done')
+          setErrorMessage(null)
+        } else if (event.event === 'error') {
+          const errorMsg = event.data.message || 'Streaming error occurred'
+          setErrorMessage(errorMsg)
+          setStatus('error')
         }
-      } else if (event.event === 'done') {
-        setStatus('done')
-      } else if (event.event === 'error') {
+      } catch (error) {
+        // Catch any unexpected errors in event handler
+        const errorMsg = error instanceof Error ? error.message : 'Unexpected error'
+        setErrorMessage(errorMsg)
         setStatus('error')
       }
     })
@@ -60,9 +83,12 @@ export function AIExplore() {
       .then(() => {
         if (status !== 'error') {
           setStatus('done')
+          setErrorMessage(null)
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        const errorMsg = error instanceof Error ? error.message : 'Streaming failed'
+        setErrorMessage(errorMsg)
         setStatus('error')
       })
   }
@@ -77,6 +103,7 @@ export function AIExplore() {
 
   const handleError = (error: string) => {
     console.error('File upload error:', error)
+    setErrorMessage(error)
     setStatus('error')
   }
 
@@ -105,6 +132,21 @@ export function AIExplore() {
         <h2>Vega Chart Preview</h2>
         <VegaChartPreview spec={vegaSpec} />
       </div>
+
+      {errorMessage && (
+        <div
+          style={{
+            padding: '1rem',
+            backgroundColor: '#fee',
+            border: '1px solid #fcc',
+            borderRadius: '4px',
+            color: '#c33',
+            marginTop: '2rem',
+          }}
+        >
+          <strong>Error:</strong> {errorMessage}
+        </div>
+      )}
     </div>
   )
 }

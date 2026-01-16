@@ -228,3 +228,25 @@ Build a single page "AI Explore" that:
   - Reset state when new file is loaded
   - Integrate all utilities: parseJsonlFile, emulateSSE, extractVegaSpec, validateVegaSpec
 ---
+
+## 2025-01-16 - US-012
+- Add error handling throughout the application
+- Added error message state and display in AIExplore
+- File read errors are caught and displayed (via FileUpload onError callback)
+- JSON parse errors don't crash app (jsonlParser handles gracefully, logs warning)
+- Vega render errors are caught (VegaChartPreview catches vega-embed errors)
+- Streaming errors set status to 'error' (event handler catches errors)
+- Error messages shown to user (red error box at bottom of page)
+- Added try-catch around spec extraction/validation (doesn't crash on invalid spec)
+- Added try-catch in event handler (catches unexpected errors)
+- Added try-catch in handleFileLoaded (catches file load errors)
+- All error paths set status to 'error' and display error message
+- Typecheck passes successfully
+- **Learnings:**
+  - Always wrap async operations and event handlers in try-catch
+  - Display error messages to user, don't just log to console
+  - Use error state to show/hide error UI
+  - Clear error messages when operation succeeds
+  - Graceful degradation: spec extraction errors don't crash streaming
+  - Error boundaries not needed for this simple app (all errors handled locally)
+---
