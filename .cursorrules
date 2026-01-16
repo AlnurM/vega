@@ -1,0 +1,47 @@
+# Codebase Patterns
+
+## Project Structure
+- React + TypeScript project
+- Components in `src/components/` or `components/`
+- Utilities in `src/utils/` or `utils/`
+- Types in `src/types/` or alongside files
+- Pages/routes in `src/pages/` or `app/` (depending on framework)
+
+## React/TypeScript
+- Use functional components with hooks
+- Type all props with interfaces or types
+- Use `useRef<Timeout | null>(null)` for timeouts/intervals
+- Export components from index.ts when appropriate
+- Use proper TypeScript types, avoid `any`
+
+## Vega-Lite Integration
+- Use `vega-embed` or `react-vega` for rendering
+- Handle invalid specs gracefully (don't crash)
+- Validate spec has `mark` and `encoding` before rendering
+- Use hardcoded data: `[{region:'Almaty',revenue:120}, {region:'Astana',revenue:90}, {region:'Shymkent',revenue:70}]`
+
+## File Handling
+- Use HTML5 FileReader API for .jsonl files
+- Parse .jsonl line by line (each line is JSON)
+- Handle empty lines in .jsonl gracefully
+
+## Streaming/SSE Emulation
+- Use setTimeout/clearTimeout for delays
+- Return cleanup functions for cancellation
+- Accumulate text chunks in React state
+- Handle incomplete JSON during streaming
+
+## Error Handling
+- Never let errors crash the application
+- JSON.parse errors should return null, not throw
+- Show user-friendly error messages
+- Use try-catch blocks appropriately
+
+## Testing
+- Run typecheck before committing: `npm run typecheck`
+- Verify UI at localhost:3000 (or configured port)
+- Test with llm_stream_dump.jsonl file
+
+## Git
+- Commit format: `feat: [ID] - [Title]`
+- One story per commit

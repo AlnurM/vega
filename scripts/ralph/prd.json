@@ -1,0 +1,176 @@
+{
+  "branchName": "ralph/ai-explore",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Setup project with React, TypeScript and Vega-Lite dependencies",
+      "acceptanceCriteria": [
+        "package.json with React, TypeScript, vega-embed or react-vega",
+        "TypeScript config exists",
+        "Basic project structure (src/, components/)",
+        "typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Use vega-embed or react-vega for Vega-Lite rendering"
+    },
+    {
+      "id": "US-002",
+      "title": "Define TypeScript types for SSE stream events",
+      "acceptanceCriteria": [
+        "Type for StreamEvent: token | done | error",
+        "Type for token event with delta string",
+        "Type for done event with usage data",
+        "Type for error event with message",
+        "typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Types should match llm_stream_dump.jsonl structure"
+    },
+    {
+      "id": "US-003",
+      "title": "Create utility to read and parse .jsonl file",
+      "acceptanceCriteria": [
+        "Function reads .jsonl file line by line",
+        "Parses each line as JSON",
+        "Returns array of StreamEvent objects",
+        "Handles empty lines gracefully",
+        "typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "File input should use HTML5 FileReader API"
+    },
+    {
+      "id": "US-004",
+      "title": "Implement SSE emulation with configurable delay",
+      "acceptanceCriteria": [
+        "Function takes array of events and delay (50-150ms)",
+        "Emits events one by one with delay",
+        "Returns Promise that resolves when done",
+        "Can be cancelled/stopped",
+        "typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "Use setTimeout/clearTimeout, return cleanup function"
+    },
+    {
+      "id": "US-005",
+      "title": "Create StreamingOutput component that displays text incrementally",
+      "acceptanceCriteria": [
+        "Component receives text chunks via props",
+        "Text appears gradually as chunks arrive",
+        "Maintains scroll position or auto-scrolls",
+        "Handles empty/null chunks",
+        "typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Use React state to accumulate text from token.delta"
+    },
+    {
+      "id": "US-006",
+      "title": "Create utility to extract and parse Vega spec from streaming text",
+      "acceptanceCriteria": [
+        "Extracts JSON from markdown code blocks (```json ... ```)",
+        "Handles JSON split across multiple chunks",
+        "Attempts JSON.parse on extracted text",
+        "Returns null on parse error (doesn't throw)",
+        "typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "Vega spec may be incomplete during streaming, handle gracefully"
+    },
+    {
+      "id": "US-007",
+      "title": "Create Vega spec validator",
+      "acceptanceCriteria": [
+        "Validates presence of 'mark' field",
+        "Validates presence of 'encoding' field",
+        "Returns validation result with errors array",
+        "Handles null/undefined input",
+        "typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "Basic validation, don't need full Vega-Lite schema validation"
+    },
+    {
+      "id": "US-008",
+      "title": "Create VegaChartPreview component using vega-embed",
+      "acceptanceCriteria": [
+        "Component receives Vega spec and data as props",
+        "Renders chart using vega-embed",
+        "Uses hardcoded data: [{region:'Almaty',revenue:120}, {region:'Astana',revenue:90}, {region:'Shymkent',revenue:70}]",
+        "Shows loading/error states",
+        "typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": "Use vega-embed or react-vega, handle invalid specs gracefully"
+    },
+    {
+      "id": "US-009",
+      "title": "Create FileUpload component for .jsonl files",
+      "acceptanceCriteria": [
+        "File input accepts .jsonl files",
+        "Shows selected file name",
+        "Reads file content on selection",
+        "Emits file content to parent",
+        "typecheck passes"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": "Use HTML5 FileReader API, validate file extension"
+    },
+    {
+      "id": "US-010",
+      "title": "Create Play/Stop controls and status indicator",
+      "acceptanceCriteria": [
+        "Play button starts streaming",
+        "Stop button cancels streaming",
+        "Status shows: idle | streaming | done | error",
+        "Buttons disabled/enabled based on state",
+        "typecheck passes"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": "Status should update based on streaming state"
+    },
+    {
+      "id": "US-011",
+      "title": "Create AI Explore page component combining all parts",
+      "acceptanceCriteria": [
+        "Page has FileUpload, Play/Stop controls, StreamingOutput, VegaChartPreview",
+        "Load dump button loads .jsonl file",
+        "Play starts SSE emulation",
+        "Streaming output updates in real-time",
+        "Vega chart updates as spec is extracted",
+        "Status updates correctly",
+        "typecheck passes",
+        "Verify at localhost:3000/ai-explore (or configured port)"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": "Integrate all components, handle state management"
+    },
+    {
+      "id": "US-012",
+      "title": "Add error handling throughout the application",
+      "acceptanceCriteria": [
+        "File read errors are caught and displayed",
+        "JSON parse errors don't crash app",
+        "Vega render errors are caught",
+        "Streaming errors set status to 'error'",
+        "Error messages shown to user",
+        "typecheck passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": "All try-catch blocks, error boundaries if needed"
+    }
+  ]
+}

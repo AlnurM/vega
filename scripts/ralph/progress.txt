@@ -1,0 +1,48 @@
+# Ralph Progress Log
+Started: 2024-01-15
+
+## Project: AI Explore - LLM Streaming with Vega-Lite Visualization
+
+## Codebase Patterns
+- React + TypeScript project
+- Use vega-embed or react-vega for Vega-Lite
+- File handling: HTML5 FileReader API
+- Streaming: setTimeout/clearTimeout with cleanup
+- Error handling: graceful degradation, no crashes
+
+## Key Files
+- llm_stream_dump.jsonl (sample data)
+- task_instructions.md (requirements)
+
+## Task Overview
+Build a single page "AI Explore" that:
+1. Loads .jsonl dump file
+2. Emulates SSE streaming (50-150ms delay)
+3. Shows streaming text output
+4. Extracts Vega spec from text (may be split across chunks)
+5. Validates Vega spec (mark, encoding)
+6. Renders Vega-Lite chart with hardcoded data
+
+## Technical Stack
+- React + TypeScript
+- Vega-Lite (vega-embed or react-vega)
+- No backend required
+- Clean structure (hooks/utils)
+
+---
+
+## 2025-01-16 - US-001
+- Setup project with React, TypeScript and Vega-Lite dependencies
+- Created package.json with React 18.2.0, TypeScript 5.3.3, vega-embed 6.29.0, vega-lite 5.2.0, vega 5.25.0
+- Created tsconfig.json with strict mode and React JSX transform
+- Created vite.config.ts for Vite bundler
+- Created basic project structure: src/, src/components/, src/utils/, src/types/, src/pages/
+- Created index.html entry point
+- Created minimal App.tsx and main.tsx
+- Typecheck passes successfully
+- **Learnings:**
+  - Use Vite as bundler for React + TypeScript projects (fast and modern)
+  - vega-embed requires compatible versions of vega and vega-lite (vega-embed 6.29.0 works with vega 5.25.0 and vega-lite 5.2.0)
+  - React 18+ with new JSX transform doesn't require React import in components
+  - TypeScript strict mode helps catch unused imports early
+---
