@@ -113,3 +113,21 @@ Build a single page "AI Explore" that:
   - Handle scroll events to detect user interaction
   - Use whiteSpace: pre-wrap to preserve formatting
 ---
+
+## 2025-01-16 - US-006
+- Create utility to extract and parse Vega spec from streaming text
+- Created src/utils/vegaExtractor.ts with extractVegaSpec function
+- Extracts JSON from markdown code blocks (```json ... ```)
+- Also handles JSON that appears directly in text (may be incomplete)
+- Handles JSON split across multiple chunks (tries to parse what's available)
+- Attempts JSON.parse on extracted text
+- Returns null on parse error (doesn't throw) - graceful degradation
+- Handles incomplete JSON during streaming gracefully
+- Typecheck passes successfully
+- **Learnings:**
+  - Use regex to find JSON in markdown code blocks: /```json\s*([\s\S]*?)```/i
+  - During streaming, JSON may be incomplete, so parsing can fail
+  - Always return null instead of throwing errors (graceful degradation)
+  - Try to extract JSON even if code block is not closed yet
+  - Use [\s\S] instead of . to match newlines in regex
+---
