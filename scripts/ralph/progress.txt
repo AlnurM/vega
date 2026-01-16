@@ -77,3 +77,20 @@ Build a single page "AI Explore" that:
   - Don't crash on invalid JSON lines, log warning and continue
   - Use try-catch around JSON.parse for each line
 ---
+
+## 2025-01-16 - US-004
+- Implement SSE emulation with configurable delay
+- Created src/utils/sseEmulator.ts with emulateSSE function
+- Takes array of StreamEvent objects and delay (50-150ms)
+- Emits events one by one with setTimeout delay
+- Returns Promise that resolves when all events are emitted
+- Returns cleanup function to cancel streaming (clears timeout)
+- Handles cancellation gracefully (resolves promise, doesn't reject)
+- Typecheck passes successfully
+- **Learnings:**
+  - Use setTimeout/clearTimeout for delays in browser environment
+  - Return both Promise and cleanup function for cancellation support
+  - Track timeout ID to allow cleanup
+  - Use cancelled flag to prevent further emissions after cleanup
+  - Cleanup should resolve promise (not reject) for graceful cancellation
+---
