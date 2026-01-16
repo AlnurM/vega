@@ -131,3 +131,20 @@ Build a single page "AI Explore" that:
   - Try to extract JSON even if code block is not closed yet
   - Use [\s\S] instead of . to match newlines in regex
 ---
+
+## 2025-01-16 - US-007
+- Create Vega spec validator
+- Created src/utils/vegaValidator.ts with validateVegaSpec function
+- Validates presence of 'mark' field (must be string)
+- Validates presence of 'encoding' field (must be object)
+- Returns validation result with isValid flag and errors array
+- Handles null/undefined input gracefully (returns validation error)
+- Basic validation (doesn't validate full Vega-Lite schema)
+- Typecheck passes successfully
+- **Learnings:**
+  - Return structured validation result with isValid and errors array
+  - Check for null/undefined first before accessing properties
+  - Validate type of fields, not just presence
+  - Use Array.isArray check to distinguish objects from arrays
+  - Keep validation simple - don't need full schema validation for MVP
+---
