@@ -94,3 +94,22 @@ Build a single page "AI Explore" that:
   - Use cancelled flag to prevent further emissions after cleanup
   - Cleanup should resolve promise (not reject) for graceful cancellation
 ---
+
+## 2025-01-16 - US-005
+- Create StreamingOutput component that displays text incrementally
+- Created src/components/StreamingOutput.tsx
+- Component receives text chunks via props (accumulated text)
+- Text appears gradually as chunks arrive (parent accumulates from token.delta)
+- Auto-scrolls to bottom when new text arrives
+- Maintains scroll position if user scrolls up (stops auto-scroll)
+- Re-enables auto-scroll if user scrolls near bottom (within 50px)
+- Handles empty/null chunks gracefully (displays empty string)
+- Uses useRef for scroll container and auto-scroll state
+- Typecheck passes successfully
+- **Learnings:**
+  - Use useRef to track scroll container and auto-scroll preference
+  - Auto-scroll only when user is near bottom (better UX)
+  - Use useEffect to scroll when text changes
+  - Handle scroll events to detect user interaction
+  - Use whiteSpace: pre-wrap to preserve formatting
+---
