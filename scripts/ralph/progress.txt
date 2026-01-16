@@ -167,3 +167,24 @@ Build a single page "AI Explore" that:
   - Use useEffect cleanup to clear chart on unmount
   - Catch vega-embed errors and display user-friendly error message
 ---
+
+## 2025-01-16 - US-009
+- Create FileUpload component for .jsonl files
+- Created src/components/FileUpload.tsx
+- File input accepts .jsonl files (accept=".jsonl")
+- Shows selected file name when file is selected
+- Reads file content on selection using parseJsonlFile utility
+- Emits file content (StreamEvent[]) to parent via onFileLoaded callback
+- Validates file extension (.jsonl)
+- Shows loading state while reading file
+- Handles errors gracefully (calls onError callback)
+- Uses hidden file input with button trigger for better UX
+- Typecheck passes successfully
+- **Learnings:**
+  - Use hidden file input with button for better UX
+  - Validate file extension before processing
+  - Show loading state during file read
+  - Use parseJsonlFile utility (reuses US-003 functionality)
+  - Emit events to parent via callback props
+  - Clear selected file name on error
+---
